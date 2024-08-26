@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 require("./services/passport");
 const keys = require("./config/keys");
 const authRoutes = require("./routes/authRoutes");
-require("./models/User");"
+const User = require("./models/User");
 
 mongoose.connect(keys.mongoURI);
 
