@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../store/slices/authSlice";
 
 import Header from "./Header";
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>SurveyNew</h2>;
-const Landing = () => <h2>Landing</h2>;
+import Landing from "./Landing";
+import Dashboard from "./Dashboard";
+import SurveyNew from "./surveys/SurveyNew";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
   return (
-    <div className>
+    <div className="container">
       <BrowserRouter>
-        <div>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/surveys" element={<Dashboard />} />
-            <Route path="/surveys/new" element={<SurveyNew />} />
-          </Routes>
-        </div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/surveys" element={<Dashboard />} />
+          <Route path="/surveys/new" element={<SurveyNew />} />
+          <Route path="/api/stripe/success" element={<Dashboard />} />
+          <Route path="/api/stripe/cancel" element={<Landing />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
